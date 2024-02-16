@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -31,21 +30,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  late double imageHeight; // Definimos la variable imageHeight
 
   @override
   Widget build(BuildContext context) {
+    // Calculamos imageHeight basado en el ancho disponible
+    imageHeight = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: SingleChildScrollView(
-        // Envuelve la columna con SingleChildScrollView
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -56,15 +52,13 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-            LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                // Calcula la altura de la imagen basada en el ancho disponible
-                double imageHeight = constraints.maxWidth;
-                return Image.network(
-                  'https://photos.xgroovy.com/contents/albums/sources/165000/165259/161031.jpg',
-                  width: imageHeight,
-                );
-              },
+            Image.network(
+              'https://photos.xgroovy.com/contents/albums/sources/165000/165259/161031.jpg',
+              width: imageHeight, // Usamos la variable imageHeight
+            ),
+            Image.network(
+              'https://photos.xgroovy.com/contents/albums/sources/165000/165259/161031.jpg',
+              width: imageHeight, // Usamos la variable imageHeight
             ),
             // Agrega más widgets aquí
           ],
@@ -95,5 +89,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
     );
+  }
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
   }
 }
